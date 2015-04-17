@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*Class for data parsing*/
 public class DataPairsParser {
 
+    /*method, which parse file to list of DataPairs*/
     public static List<DataPair> parseFromFile(File file){
         List<DataPair> dataPairs = new ArrayList<DataPair>();
         try {
@@ -33,6 +35,7 @@ public class DataPairsParser {
         return dataPairs;
     }
 
+    /*method, which save list of DataPairs to File, every DataPair in one line*/
     public static boolean saveToFile(List<DataPair> datapairs, String filePath){
         File file = null;
         boolean allOK = false;
@@ -52,6 +55,7 @@ public class DataPairsParser {
         return allOK;
     }
 
+    /*method, which parsing list of DataPairs to one String,every DataPair in one line*/
     public static String parseDataPairsToString(List<DataPair> dataPairs){
         StringBuilder builder = new StringBuilder();
         String newLine = System.getProperty("line.separator");
@@ -66,6 +70,7 @@ public class DataPairsParser {
         return builder.toString();
     }
 
+    /*method, which return one DataPair from one Stringline by spliting it using '='*/
     public static DataPair parseStringLineToDataPair(String line) {
         String delims = "=";
         String[] tokens = line.split(delims);

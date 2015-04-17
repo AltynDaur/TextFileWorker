@@ -14,6 +14,8 @@ public class TextFileWorker {
 
     StringBuilder menuBuilder = new StringBuilder();
     List<DataPair> currentDataPairs = null;
+
+
     {
         menuBuilder.append("Text file worker menu:\n");
         menuBuilder.append("1 - Load data from file\n");
@@ -27,6 +29,8 @@ public class TextFileWorker {
         menuBuilder.append("9 - Filter data by value\n");
         menuBuilder.append("0 - Exit\n");
     }
+
+    /*method, which show main menu and choosing next actions*/
     public void menu() {
         System.out.println(menuBuilder.toString());
         String answer = scanningAnswer();

@@ -1,8 +1,8 @@
 package com.epam.entity;
 
-
 import java.util.Comparator;
 
+/*Main entity, which contains one pair name-value*/
 public class DataPair {
     String name;
     String value;
@@ -31,6 +31,8 @@ public class DataPair {
     public void setValue(String value) {
         this.value = value;
     }
+
+
     public static Comparator<DataPair> NameAscendingComparator
             = new Comparator<DataPair>() {
 
