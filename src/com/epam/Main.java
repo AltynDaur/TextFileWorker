@@ -8,7 +8,12 @@ public class Main {
 
     public static void main(String[] args) {
 	    TextFileWorker worker = new TextFileWorker();
-        worker.menu();
+        int userAnswer = 0;
+        do {
+            userAnswer = worker.menu();
+            worker.makeAction(userAnswer);
+        } while (userAnswer != 0);
+        System.out.println("Finish Text File Worker!");
 
     }
 }

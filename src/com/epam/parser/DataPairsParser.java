@@ -24,10 +24,11 @@ public class DataPairsParser {
 
             }
             reader.close();
+            System.out.println("Data loaded!");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File not found!");
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -78,7 +79,8 @@ public class DataPairsParser {
             tokens[i] = tokens[i].trim();
         }
         if(tokens.length != 2){
-            throw new IllegalArgumentException("Can't parse line:" + line);
+            System.out.println("Illegal data pair:"+line);
+            System.out.println("Make sure that data pair has view like this: exampleName = exampleValue");
         }
         DataPair dataPair = new DataPair(tokens[0],tokens[1]);
         return dataPair;

@@ -4,6 +4,7 @@ package com.epam.textfileworker;
 import com.epam.entity.DataPair;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static com.epam.parser.DataPairsParser.parseFromFile;
@@ -31,30 +32,36 @@ public class TextFileWorker {
     }
 
     /*method, which show main menu and choosing next actions*/
-    public void menu() {
+    public int menu() {
         System.out.println(menuBuilder.toString());
-        String answer = scanningAnswer();
-        switch (answer.charAt(0)){
-            case '1':
+        int answer = 0;
+        try {
+            answer = Integer.parseInt(scanningAnswer());
+        } catch (NumberFormatException e) {
+            System.out.println("Enter the number of action: ");
+
+        }
+        return answer;
+    }
+
+    public void makeAction(int actionNumber){
+        switch (actionNumber){
+            case 1:
                 currentDataPairs = new ArrayList<DataPair>();
                 currentDataPairs = parseFromFile(loadFile());
-                System.out.println("Data loaded!");
-                menu();
                 break;
-            case '2':
+            case 2:
                 showDataPairs(currentDataPairs);
-                menu();
                 break;
-            case '3':
+            case 3:
                 DataPair addedDataPair = getDataPair();
                 if(currentDataPairs == null){
                     currentDataPairs = new ArrayList<DataPair>();
                 }
                 currentDataPairs.add(addedDataPair);
                 System.out.println("Data pair added!");
-                menu();
                 break;
-            case '4':
+            case 4:
                 System.out.println("Enter name of data pair: ");
                 String name = scanningAnswer();
                 for (int i = 0; i < currentDataPairs.size(); i++) {
@@ -63,13 +70,11 @@ public class TextFileWorker {
                     }
                 }
                 System.out.println("Data pair"+name+" removed");
-                menu();
                 break;
-            case '5':
+            case 5:
                 System.out.println("Data is saved? "+saveData());
-                menu();
                 break;
-            case '6':
+            case 6:
                 System.out.println("1 - Ascending order");
                 System.out.println("2 - Descending order");
                 String nameOrder = scanningAnswer();
@@ -81,9 +86,8 @@ public class TextFileWorker {
                     System.out.println("Data sorted!");
                 }else
                     System.out.println("Wrong argument!");
-                menu();
                 break;
-            case '7':
+            case 7:
                 System.out.println("1 - Ascending order");
                 System.out.println("2 - Descending order");
                 String valueOrder = scanningAnswer();
@@ -95,9 +99,8 @@ public class TextFileWorker {
                     System.out.println("Data sorted!");
                 }else
                     System.out.println("Wrong argument!");
-                menu();
                 break;
-            case '8':
+            case 8:
                 System.out.println("Enter filter name: ");
                 String nameFilter = scanningAnswer().toLowerCase();
                 List<DataPair> filteredByName = new ArrayList<DataPair>();
@@ -108,9 +111,8 @@ public class TextFileWorker {
                     }
                 }
                 showDataPairs(filteredByName);
-                menu();
                 break;
-            case '9':
+            case 9:
                 System.out.println("Enter filter name: ");
                 String valueFilter = scanningAnswer().toLowerCase();
                 List<DataPair> filteredByValue = new ArrayList<DataPair>();
@@ -121,17 +123,14 @@ public class TextFileWorker {
                     }
                 }
                 showDataPairs(filteredByValue);
-                menu();
                 break;
 
-            case '0':
-                System.out.println("Finish Text File Worker!");
-                System.exit(0);
+            case 0:
                 break;
-            default:
-                menu();
+
+
         }
-    }
+    };
 
     private void showDataPairs(List<DataPair> dataPairs) {
         for (int i = 0; i < dataPairs.size(); i++) {
@@ -142,13 +141,21 @@ public class TextFileWorker {
     private DataPair getDataPair() {
         System.out.println("Enter data pair with symbol ' = ' between");
         String datapairLine = scanningAnswer();
-        return parseStringLineToDataPair(datapairLine);
+        DataPair currentDataPair = null;
+        try {
+            currentDataPair = parseStringLineToDataPair(datapairLine);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            menu();
+        }
+        return currentDataPair;
     }
 
     private File loadFile() {
         System.out.println("Enter file path:");
         String filePath = scanningAnswer();
-        File currentFile = new File(filePath);
+        File currentFile = null;
+        currentFile = new File(filePath);
+
         return currentFile;
     }
 
